@@ -5,4 +5,5 @@ def get_answer(question):
 while dialog1!='пока':	
 	dialog1=input()
 	print(get_answer(dialog1))
+print('Привет GitHub')
 
