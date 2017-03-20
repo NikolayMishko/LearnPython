@@ -1,4 +1,6 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+import datetime
+import ephem
 
 def main():
     updater = Updater("362072092:AAEdbOCaRu2p44UVoUkHwZ05YkTKV3H0WM4")
@@ -29,9 +31,13 @@ def show_error(bot, update, error):
 def get_answer(question):
     answers={"привет":"И тебе привет!"," как дела ?":" Лучше всех","пока":" Увидимся"}
     if question[-1]=='=':
-        print('Давай разберемся')
-        print(calculator(question))
+        #print('Давай разберемся')
+        #print(calculator(question))
         return calculator(question)
+    elif question.startswith('Сколько будет')==True:
+        return calculator_ext(question)
+    elif question.startswith('Когда ближайшее полнолуние')==True:
+        return next_full_moon(question)
     else:
         return answers.get(question.lower(),'привет, попробуй еще раз')
 def talk_to_me(bot, update):
@@ -45,7 +51,6 @@ def planet(planet_name):
 	bot.sendMessage(update.message.chat_id,'Тест')
 
 
-#s=input('Введите фразу ')
 def word_count(bot, update):
 	s=update.message.text
 	s1=s[11:]
@@ -99,4 +104,46 @@ def calculator(question):
             print('знак не введен')
 
     return l
+
+def calculator_ext(question):
+    str_i=question[14:]    
+    numbers={'один':1,'два':2,'три':3,'четыре':4,'пять':5,'шесть':6,'семь':7,'восемь':8,'девять':9,'десять':10}
+    space_poz=str_i.find(' ')
+    a=str_i[:space_poz]
+   # if a.startswith('и')==True:
+        #
+    number1=numbers[a]
+    str_i=str_i[len(a)+1:]
+    space_poz=str_i.find(' ')
+    a=str_i[:space_poz]
+    if a=='плюс':
+        str_i=str_i[len(a)+1:]
+        number2=numbers[str_i]
+        rezult=number1+number2
+        #print('ответ ' + str(rezult))
+    elif a=='минус':
+        str_i=str_i[len(a)+1:]
+        number2=numbers[str_i]
+        rezult=number1-number2
+        #print('ответ ' + str(rezult))
+    elif a=='умножить':
+        str_i=str_i[len(a)+4:]
+        number2=numbers[str_i]
+        rezult=number1*number2
+        #print('ответ ' + str(rezult))
+    elif (a=='делить') or (a=='разделить'):
+        str_i=str_i[len(a)+4:]
+        number2=numbers[str_i]
+        rezult=number1/number2
+        #print('ответ ' + str(rezult))
+    #else:
+        #print('ошибка ввода')
+    return rezult  
+def next_full_moon(question):
+    q=question
+    q=q[33:-1]
+    date_dt = datetime.datetime.strptime(q, '%Y-%m-%d')
+    date_fool_moon=(ephem.next_full_moon(date_dt))
+    return date_fool_moon
+    
 main()
