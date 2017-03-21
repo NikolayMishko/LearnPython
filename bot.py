@@ -37,7 +37,7 @@ def get_answer(question):
     elif question.startswith('Сколько будет')==True:
         return calculator_ext(question)
     elif question.startswith('Когда ближайшее полнолуние')==True:
-        return next_full_moon(question)
+        return next_f_moon(question)
     else:
         return answers.get(question.lower(),'привет, попробуй еще раз')
 def talk_to_me(bot, update):
@@ -139,10 +139,11 @@ def calculator_ext(question):
     #else:
         #print('ошибка ввода')
     return rezult  
-def next_full_moon(question):
+def next_f_moon(question):
     q=question
     q=q[33:-1]
     date_dt = datetime.datetime.strptime(q, '%Y-%m-%d')
+    print(date_dt)
     date_fool_moon=(ephem.next_full_moon(date_dt))
     return date_fool_moon
     
