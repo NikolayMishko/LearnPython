@@ -31,8 +31,6 @@ def show_error(bot, update, error):
 def get_answer(question):
     answers={"привет":"И тебе привет!"," как дела ?":" Лучше всех","пока":" Увидимся"}
     if question[-1]=='=':
-        #print('Давай разберемся')
-        #print(calculator(question))
         return calculator(question)
     elif question.startswith('Сколько будет')==True:
         return calculator_ext(question)
@@ -145,6 +143,6 @@ def next_f_moon(question):
     date_dt = datetime.datetime.strptime(q, '%Y-%m-%d')
     print(date_dt)
     date_fool_moon=(ephem.next_full_moon(date_dt))
-    return date_fool_moon
+    return str(date_fool_moon)
     
 main()
