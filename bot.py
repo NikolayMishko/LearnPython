@@ -8,8 +8,6 @@ def main():
     dp.add_handler(CommandHandler("start", greet_user))
     dp.add_handler(CommandHandler("wordcount", word_count))
     
-
-    #dp.add_handler(MessageHandler([Filters.text], talk_to_me))
     dp.add_handler(MessageHandler([Filters.text], talk_to_me_new))
 
     dp.add_error_handler(show_error)
@@ -65,7 +63,7 @@ def calculator(question):
     print('calc')
     s=question
     if s[-1]=='=':
-        l=('Произошла какая-то ошибка')
+        l=('ошибка ввода ')
         s=s[:-1]
         a=(s.find('/'))
         b=(s.find('*'))
@@ -98,8 +96,6 @@ def calculator(question):
             s1=int(s[:poz])
             s2=int(s[(poz+1):])
             l=s1-s2
-        else:
-            print('знак не введен')
 
     return l
 
@@ -108,8 +104,7 @@ def calculator_ext(question):
     numbers={'один':1,'два':2,'три':3,'четыре':4,'пять':5,'шесть':6,'семь':7,'восемь':8,'девять':9,'десять':10}
     space_poz=str_i.find(' ')
     a=str_i[:space_poz]
-   # if a.startswith('и')==True:
-        #
+
     number1=numbers[a]
     str_i=str_i[len(a)+1:]
     space_poz=str_i.find(' ')
@@ -118,24 +113,22 @@ def calculator_ext(question):
         str_i=str_i[len(a)+1:]
         number2=numbers[str_i]
         rezult=number1+number2
-        #print('ответ ' + str(rezult))
+
     elif a=='минус':
         str_i=str_i[len(a)+1:]
         number2=numbers[str_i]
         rezult=number1-number2
-        #print('ответ ' + str(rezult))
+ 
     elif a=='умножить':
         str_i=str_i[len(a)+4:]
         number2=numbers[str_i]
         rezult=number1*number2
-        #print('ответ ' + str(rezult))
+
     elif (a=='делить') or (a=='разделить'):
         str_i=str_i[len(a)+4:]
         number2=numbers[str_i]
         rezult=number1/number2
-        #print('ответ ' + str(rezult))
-    #else:
-        #print('ошибка ввода')
+
     return rezult  
 def next_f_moon(question):
     q=question
